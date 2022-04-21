@@ -55,7 +55,7 @@ class Analytics extends Component {
         else {
             const config = {
                 method: 'get',
-                url: 'https://ec2-52-23-38-77.compute-1.amazonaws.com:8080',
+                url: 'http://ec2-52-23-38-77.compute-1.amazonaws.com:8080',
                 headers: {
                     'Content-Type': 'application/json',
                     'To': this.state.emailAddress,
@@ -65,27 +65,28 @@ class Analytics extends Component {
             }
             let daysToRespond;
 
-            axios(config)
-                .then((response) => {
-                    const minutes = JSON.stringify(response.data.minutes);
-
-                    if (minutes != undefined) {
-                        daysToRespond = this.getRandomInt(3);
-                    }
-                    else {
-                        const hours = Math.ceil(minutes / 60 );
-                        daysToRespond = Math.ceil(hours / 24);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                    daysToRespond = this.getRandomInt(3);
-                });
+            // axios(config)
+            //     .then((response) => {
+            //         consoele.log(response.data.minutes);
+            //         const minutes = JSON.stringify(response.data.minutes);
+            //
+            //         if (minutes == undefined) {
+            //             daysToRespond = this.getRandomInt(3);
+            //         }
+            //         else {
+            //             const hours = Math.ceil(minutes / 60 );
+            //             daysToRespond = Math.ceil(hours / 24);
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //         daysToRespond = this.getRandomInt(3);
+            //     });
 
             const openRate = this.getRandomInt(20) + 7;
             const replyRateMax = Math.floor(openRate * 0.25);
             const replyRate = this.getRandomInt(replyRateMax) + 2;
-            // daysToRespond = this.getRandomInt(3);
+            daysToRespond = this.getRandomInt(3);
 
             this.setState({openRate, replyRate});
 
