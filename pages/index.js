@@ -18,6 +18,8 @@ class Analytics extends Component {
             daysToRespond: '0 days',
             openRate: 0,
             replyRate: 0,
+            pSubjectLine: '',
+            pMessage: '',
         }
 
         this.processForm = this.processForm.bind(this);
@@ -37,7 +39,9 @@ class Analytics extends Component {
             message: '',
             daysToRespond: '0 days',
             openRate: 0,
-            replyRate: 0
+            replyRate: 0,
+            pSubjectLine: '',
+            pMessage: ''
         });
     }
 
@@ -45,6 +49,15 @@ class Analytics extends Component {
         const emailAddress = this.state.emailAddress;
         const subjectLine = this.state.subjectLine;
         const message = this.state.message;
+
+        if (subjectLine == this.state.pSubjectLine && message == this.state.pMessage) {
+            return;
+        }
+
+        this.setState({
+            pSubjectLine: subjectLine,
+            pMessage: message
+        });
 
         if (emailAddress == "" || subjectLine == "" || message == "") {
             this.setState({
