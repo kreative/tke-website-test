@@ -1,0 +1,81 @@
+.contact_form_section {
+  padding-right: 50px;
+  border-right: 2px solid #e8e8e8;
+}
+
+.contact_details {
+  padding-left: 50px;
+  word-wrap: break-word;
+}
+
+.contact_detail {
+  padding-bottom: 0px;
+}
+
+.contact_label {
+  color: #4A4A4A;
+  font-size: 1em;
+  margin-bottom: -20px;
+}
+
+.contact_info {
+  color: #FF0E9F;
+  font-size: 1.6em;
+}
+
+.faq_link {
+  font-size: 1em;
+}
+
+.faq_link a {
+  color: #FF0E9F;
+}
+
+.faq_header {
+  padding-top: 25px;
+  margin-bottom: -1px;
+}
+
+.helper_text {
+    font-size: 1.1em;
+}
+
+.bigwin_logo {
+    width: 30%;
+}
+
+.ss {
+    outline: none;
+    padding: 0.9em 1.1em;
+    background: #fefefe;
+    border: 1px solid #cfcfcf;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-weight: normal;
+    font-size: 1em;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.ss:focus {
+    outline: 1px #FF0E9F solid;
+}
+
+.f-field {
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .contact_form_section {
+      padding-right: 0px;
+      border-right: none;
+      padding-bottom: 50px;
+      border-bottom: 2px solid #C5C5C5;
+  }
+
+  .contact_details {
+      padding-left: 0px;
+      padding-top: 75px;
+  }   
+}
