@@ -4,6 +4,7 @@ import Wrapper from '../components/Wrapper/Wrapper';
 import styles from "../styles/contact.module.css";
 import {Col, Container, Row} from "react-grid-system";
 import Button from "../components/Button/Button";
+import axios from "axios";
 
 class Analytics extends Component {
     constructor(props) {
@@ -20,11 +21,23 @@ class Analytics extends Component {
         }
 
         this.processForm = this.processForm.bind(this);
+        this.clearForm = this.clearForm.bind(this);
         this.getRandomInt = this.getRandomInt.bind(this);
     }
 
     getRandomInt(max) {
         return Math.floor(Math.random() * max);
+    }
+
+    clearForm() {
+        this.setState({
+            emailAddress: '',
+            subjectLine: '',
+            message: '',
+            daysToRespond: '0 days',
+            openRate: 0,
+            replyRate: 0
+        });
     }
 
     processForm() {
@@ -33,41 +46,50 @@ class Analytics extends Component {
         const message = this.state.message;
 
         if (emailAddress == "" || subjectLine == "" || message == "") {
-            this.setState({ helperText: "Please fill out all fields!"});
-            this.setState({ textColor: "red"});
+            this.setState({
+                helperText: "Please fill out all fields!",
+                textColor: "red"
+            });
         }
         else {
-            const headers = {
-                'Content-Type': 'application/json',
-                'To': this.state.emailAddress,
-                'Subject': this.state.subjectLine,
-                'Body': this.state.message
+            const config = {
+                method: 'get',
+                url: 'https://ec2-52-23-38-77.compute-1.amazonaws.com:8080',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'To': this.state.emailAddress,
+                    'Subject': this.state.subjectLine,
+                    'Body': this.state.message
+                }
             }
+            let daysToRespond;
 
-            // fetch("https://ec2-52-23-38-77.compute-1.amazonaws.com:8080", { headers })
-            //     .then(response => response.json())
-            //     .then(responseTime => {
-            //         console.log(responseTime.response_time);
-            //         this.setState({ daysToRespond: responseTime });
-            //     });
+            // axios(config)
+            //     .then((response) => {
+            //         const minutes = JSON.stringify(response.data.minutes);
             //
-            // const factor = this.state.daysToRespond * 1.23 * 0.1;
-            // this.setState({ helperText: factor });
+            //         if (minutes != undefined) {
+            //             daysToRespond = this.getRandomInt(3);
+            //         }
+            //         else {
+            //             const hours = Math.ceil(minutes / 60 );
+            //             daysToRespond = Math.ceil(hours / 24);
+            //         }
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //         daysToRespond = this.getRandomInt(3);
+            //     });
 
             const openRate = this.getRandomInt(20) + 7;
             const replyRateMax = Math.floor(openRate * 0.25);
             const replyRate = this.getRandomInt(replyRateMax) + 2;
-            const daysToRespond = this.getRandomInt(3);
+            daysToRespond = this.getRandomInt(3);
 
-            this.setState({ openRate });
-            this.setState({ replyRate });
+            this.setState({openRate, replyRate});
 
-            if (daysToRespond == 0) {
-                this.setState({daysToRespond: "Same day!"});
-            }
-            else {
-                this.setState({ daysToRespond: daysToRespond + " days" });
-            }
+            if (daysToRespond == 0) this.setState({daysToRespond: "Same day!"});
+            else this.setState({ daysToRespond: daysToRespond + " days" });
         }
     }
 
@@ -127,21 +149,43 @@ class Analytics extends Component {
                                                   required
                                               />
                                             </div>
-                                            <div id={"button_holder"} onClick={this.processForm}>
-                                                <Button
-                                                    type="submit"
-                                                    fill="#950EFF"
-                                                    hoverColor="#730CC5"
-                                                    textColor="white"
-                                                    radius="3px"
-                                                    border="1px solid #001AFF"
-                                                    hoverBorder="1px solid #004893"
-                                                    padding="15px 50px"
-                                                    width={"100%"}
-                                                >
-                                                    Analyze Email
-                                                </Button>
-                                            </div>
+
+                                            <Row gutterWidth={10}>
+                                                <Col xs={9}>
+                                                    <div className={"button_holder"} onClick={this.processForm}>
+                                                        <Button
+                                                            type="submit"
+                                                            fill="#950EFF"
+                                                            hoverColor="#730CC5"
+                                                            textColor="white"
+                                                            radius="3px"
+                                                            border="1px solid #950EFF"
+                                                            hoverBorder="1px solid #730CC5"
+                                                            padding="15px 50px"
+                                                            width={"100%"}
+                                                        >
+                                                            Analyze Email
+                                                        </Button>
+                                                    </div>
+                                                </Col>
+                                                <Col xs={3}>
+                                                    <div className={"button_holder"} onClick={this.clearForm}>
+                                                        <Button
+                                                            type="submit"
+                                                            fill="white"
+                                                            hoverColor="#EEEEEE"
+                                                            textColor="#950EFF"
+                                                            radius="3px"
+                                                            border="2px solid #950EFF"
+                                                            hoverBorder="2px solid #950EFF"
+                                                            padding="15px 50px"
+                                                            width={"100%"}
+                                                        >
+                                                            Clear
+                                                        </Button>
+                                                    </div>
+                                                </Col>
+                                            </Row>
                                         </form>
                                     </div>
                                 </div>
