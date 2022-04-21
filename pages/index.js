@@ -31,6 +31,7 @@ class Analytics extends Component {
 
     clearForm() {
         this.setState({
+            helperText: 'Test out your email with BigWin!',
             emailAddress: '',
             subjectLine: '',
             message: '',
@@ -64,27 +65,27 @@ class Analytics extends Component {
             }
             let daysToRespond;
 
-            // axios(config)
-            //     .then((response) => {
-            //         const minutes = JSON.stringify(response.data.minutes);
-            //
-            //         if (minutes != undefined) {
-            //             daysToRespond = this.getRandomInt(3);
-            //         }
-            //         else {
-            //             const hours = Math.ceil(minutes / 60 );
-            //             daysToRespond = Math.ceil(hours / 24);
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //         daysToRespond = this.getRandomInt(3);
-            //     });
+            axios(config)
+                .then((response) => {
+                    const minutes = JSON.stringify(response.data.minutes);
+
+                    if (minutes != undefined) {
+                        daysToRespond = this.getRandomInt(3);
+                    }
+                    else {
+                        const hours = Math.ceil(minutes / 60 );
+                        daysToRespond = Math.ceil(hours / 24);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    daysToRespond = this.getRandomInt(3);
+                });
 
             const openRate = this.getRandomInt(20) + 7;
             const replyRateMax = Math.floor(openRate * 0.25);
             const replyRate = this.getRandomInt(replyRateMax) + 2;
-            daysToRespond = this.getRandomInt(3);
+            // daysToRespond = this.getRandomInt(3);
 
             this.setState({openRate, replyRate});
 
